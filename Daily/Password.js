@@ -24,14 +24,15 @@
 //
 //   Strong:
 //
-//     0B2au$11sv$!
-//     Str0ngP@$$W0rduh!!
+//     0B2au$1lsv$!
+//     Str0ngP@$sW0rduh!
 //     MinStr0ng!
 //
 //   Weak:
 //
 //     Password
 //     T00W3@K
+//     P@s$w0rd
 //
 
 
