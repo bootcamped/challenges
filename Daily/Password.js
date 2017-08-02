@@ -19,6 +19,20 @@
 //  isPasswordStrong(...) that returns the boolean true/false indicating whether the given
 //  password is strong enough for us.
 //
+//
+// Examples:
+//
+//   Strong:
+//
+//     0B2au$11sv$!
+//     Str0ngP@$$W0rduh!!
+//     MinStr0ng!
+//
+//   Weak:
+//
+//     Password
+//     T00W3@K
+//
 
 
 
