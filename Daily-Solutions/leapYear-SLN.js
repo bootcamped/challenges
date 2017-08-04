@@ -31,7 +31,7 @@
 //
 (function() {
   function isLeapYear(year) {
-    // ...
+    return ((year % 4) || ((year % 100 === 0) && (year % 400)) ? false : true);
   }
 
   console.log( isLeapYear(2009) );  // false
@@ -44,11 +44,13 @@
 // Answer #2 (ES6 BONUS - convert to generator function
 //
 (function() {
-  function isLeapYear(...years) {
-    // ...
+  function* isLeapYear(...years) {
+    for (let year of years) {
+      yield ((year % 4) || ((year % 100 === 0) && (year % 400)) ? false : true);
+    }
   }
 
-  //for (year of isLeapYear(1600, 1900, 2000, 2010, 2016, 2100)) {
-  //  console.log(year);  // true, false, true, false, true, false
-  //}
+  for (year of isLeapYear(1600, 1900, 2000, 2010, 2016, 2100)) {
+    console.log(year);  // true, false, true, false, true, false
+  }
 })();

@@ -43,6 +43,28 @@
 class TokenManager {
   constructor() {
     this.permissions = this.loadPermissions();
+
+    this.bitMaskReadOrSet = [ // or [128, 64, 32, 16, 8, 4, 2, 1 ];
+      0b10000000,    // ES5 must use 128
+      0b01000000,    // ES5 must use 64
+      0b00100000,    // ES5 must use 32
+      0b00010000,    // ES5 must use 16
+      0b00001000,    // ES5 must use 8
+      0b00000100,    // ES5 must use 4
+      0b00000010,    // ES5 must use 2
+      0b00000001     // ES5 must use 1
+    ];
+
+    this.bitMaskClear = [ // or [127, 191, 223, 239, 247, 251, 253, 254 ];
+      0b01111111,    // ES5 must use 127
+      0b10111111,    // ES5 must use 191
+      0b11011111,    // ES5 must use 223
+      0b11101111,    // ES5 must use 239
+      0b11110111,    // ES5 must use 247
+      0b11111011,    // ES5 must use 251
+      0b11111101,    // ES5 must use 253
+      0b11111110     // ES5 must use 254
+    ];
   }
 
 
@@ -52,12 +74,16 @@ class TokenManager {
       canDeleteOrders: 1,
       canViewPaymentDetails: 7,
       canViewOrderHistory: 14,
-      isPrimeMember: 30
+      isPrimeMember: 29
     };
   }
 
   hasPermission(token, permission) {
-    // ...
+    const whichByte = Math.floor(permission / 8);     // Figure out the byte number
+    const whichBit = (permission - (8 * whichByte));  // Figure out the bit position
+    const byte = token[whichByte];                    // Fetch our byte
+
+    return ((byte & this.bitMaskReadOrSet[whichBit]) ? true : false);
   }
 
   setPermission(token, permission, trueOrFalse) {
@@ -65,11 +91,21 @@ class TokenManager {
       throw "Invalid token.";
     }
 
-    // ...
+    if (!this.hasPermission(token, this.permissions.canUpdateToken)) {
+      throw "Insufficient permissions.";
+    }
+
+    const whichByte = Math.floor(permission / 8);
+    const whichBit = (permission - (8 * whichByte));
+
+    if (trueOrFalse) { // Set the bit to 1
+      token[whichByte] |= this.bitMaskReadOrSet[whichBit];
+    }
+    else { // Clear the bit
+      token[whichByte] &= this.bitMaskClear[whichBit];
+    }
   }
 }
-
-
 
 
 
