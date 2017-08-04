@@ -5,7 +5,7 @@
 // For example,
 //
 //  [215, 12, 128, 212, ...] represents a stream of bits that, in memory, look like
-//   [01010111, 00001100, 1000000, 11010100, ...].  Starting from the left-most bit,
+//   [11010111, 00001100, 1000000, 11010100, ...].  Starting from the left-most bit,
 //   moving towards infinity on the right, we count from bit position zero to n.
 //
 //  A permission mapping might look like:
