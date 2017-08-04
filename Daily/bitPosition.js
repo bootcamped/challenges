@@ -5,14 +5,16 @@
 // For example,
 //
 //  [87, 12, 64, 212, ...] represents a stream of bits that, in memory, look like
-//   [01010111, 0001100, 1000000, 11010100, ...].  Starting from the left-most bit,
+//   [01010111, 00001100, 1000000, 11010100, ...].  Starting from the left-most bit,
 //   moving towards infinity on the right, we count from bit position zero to n.
 //
 //  A permission mapping might look like:
 //
+//  Byte 0   Byte 1   Byte 2   Byte 3   ...
 //  11010111 00001100 10000000 11010100 ...
+//  ||     |       |                |
 //  ||     |       |                +- Position 30: is prime member
-//  ||     |       +------------------ Position 13: can view order history
+//  ||     |       +------------------ Position 14: can view order history
 //  ||     +-------------------------- Position 7 : can view payment details
 //  |+-------------------------------- Position 1 : can delete orders
 //  +--------------------------------- Position 0 : can change permissions on this token
@@ -39,19 +41,21 @@ class TokenManager {
       canUpdateToken: 0,
       canDeleteOrders: 1,
       canViewPaymentDetails: 7,
-      canViewOrderHistory: 13,
+      canViewOrderHistory: 14,
       isPrimeMember: 30
     };
   }
 
   hasPermission(token, permission) {
-    return false;
+    // ...
   }
 
   setPermission(token, permission, trueOrFalse) {
     if (!token || token.length === 0) {
       throw "Invalid token.";
     }
+
+    // ...
   }
 }
 
