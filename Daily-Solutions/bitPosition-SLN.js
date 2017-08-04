@@ -79,11 +79,10 @@ class TokenManager {
   }
 
   hasPermission(token, permission) {
-    const whichByte = Math.floor(permission / 8);     // Figure out the byte number
-    const whichBit = (permission - (8 * whichByte));  // Figure out the bit position
-    const byte = token[whichByte];                    // Fetch our byte
+    const [whichByte, whichBit] = this.getByteAndBit(token, permission);
+    const byte = token[whichByte];
 
-    return ((byte & this.bitMaskReadOrSet[whichBit]) ? true : false);
+    return !!(byte & this.bitMaskReadOrSet[whichBit]);
   }
 
   setPermission(token, permission, trueOrFalse) {
@@ -95,8 +94,7 @@ class TokenManager {
       throw "Insufficient permissions.";
     }
 
-    const whichByte = Math.floor(permission / 8);
-    const whichBit = (permission - (8 * whichByte));
+    const [whichByte, whichBit] = this.getByteAndBit(token, permission);
 
     if (trueOrFalse) { // Set the bit to 1
       token[whichByte] |= this.bitMaskReadOrSet[whichBit];
@@ -104,6 +102,13 @@ class TokenManager {
     else { // Clear the bit
       token[whichByte] &= this.bitMaskClear[whichBit];
     }
+  }
+
+  getByteAndBit(token, permission) {
+    const whichByte = Math.floor(permission / 8);
+    const whichBit = (permission - (8 * whichByte));
+
+    return [whichByte, whichBit];
   }
 }
 
