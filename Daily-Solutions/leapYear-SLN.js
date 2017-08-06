@@ -31,7 +31,7 @@
 //
 (function() {
   function isLeapYear(year) {
-    return ((year % 4) || ((year % 100 === 0) && (year % 400)) ? false : true);
+    return !(year % 4 || (year % 100 === 0 && year % 400));
   }
 
   console.log( isLeapYear(2009) );  // false
@@ -46,11 +46,11 @@
 (function() {
   function* isLeapYear(...years) {
     for (let year of years) {
-      yield ((year % 4) || ((year % 100 === 0) && (year % 400)) ? false : true);
+      yield !(year % 4 || (year % 100 === 0 && year % 400));
     }
   }
 
-  for (year of isLeapYear(1600, 1900, 2000, 2010, 2016, 2100)) {
+  for (let year of isLeapYear(1600, 1900, 2000, 2010, 2016, 2100)) {
     console.log(year);  // true, false, true, false, true, false
   }
 })();
